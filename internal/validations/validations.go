@@ -6,10 +6,22 @@ import (
 	"k8s.io/apimachinery/pkg/util/validation/field"
 )
 
-func ValidateConfig(config *registrycache.RegistryCacheConfig, secrets []v1.Secret) field.ErrorList {
+type Validator struct {
+	secrets         []v1.Secret
+	existingConfigs []registrycache.RegistryCacheConfig
+}
+
+func NewValidator(secrets []v1.Secret, existingConfigs []registrycache.RegistryCacheConfig) Validator {
+	return Validator{
+		secrets:         secrets,
+		existingConfigs: existingConfigs,
+	}
+}
+
+func (v Validator) Do(newConfig *registrycache.RegistryCacheConfig) field.ErrorList {
 	return nil
 }
 
-func ValidateConfigUpdate(newConfig, oldConfig *registrycache.RegistryCacheConfig, secrets []v1.Secret) field.ErrorList {
+func (v Validator) DoOnUpdate(newConfig, oldConfig *registrycache.RegistryCacheConfig) field.ErrorList {
 	return nil
 }
